@@ -48,9 +48,9 @@ fun quadraticRootProduct(a: Double, b: Double, c: Double): Double {
 /**
  * Пример главной функции
  */
-fun main() {
-    val x1x2 = quadraticRootProduct(1.0, 13.0, 42.0)
-    println("Root product: $x1x2")
+fun main(args: Array<String>) {
+    val result = sqr(5)
+    println("result = 5*5 = $result")
 }
 
 /**
@@ -76,7 +76,14 @@ fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double = TODO()
  * Пользователь задает угол в градусах, минутах и секундах (например, 36 градусов 14 минут 35 секунд).
  * Вывести значение того же угла в радианах (например, 0.63256).
  */
-fun angleInRadian(deg: Int, min: Int, sec: Int): Double = TODO()
+
+fun angleInRadian(deg: Int, min: Int, sec: Int): Double {
+    var allInDegree = deg.toDouble() + (min.toDouble()/60) + (sec.toDouble()/3600)
+    var count = (allInDegree*PI) / 180
+    return count
+}
+
+
 
 /**
  * Тривиальная
@@ -92,30 +99,36 @@ fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double = TODO()
  * Пользователь задает целое число, большее 100 (например, 3801).
  * Определить третью цифру справа в этом числе (в данном случае 8).
  */
-fun thirdDigit(number: Int): Int = TODO()
+fun thirdDigit(number: Int): Int {
+    val digit : Int = number / 100
+    val thirdNumber = digit % 10
+ return thirdNumber
+}
 
-/**
- * Простая
- *
- * Поезд вышел со станции отправления в h1 часов m1 минут (например в 9:25) и
- * прибыл на станцию назначения в h2 часов m2 минут того же дня (например в 13:01).
- * Определите время поезда в пути в минутах (в данном случае 216).
- */
-fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minutesArrive: Int): Int = TODO()
 
-/**
- * Простая
- *
- * Человек положил в банк сумму в s рублей под p% годовых (проценты начисляются в конце года).
- * Сколько денег будет на счету через 3 года (с учётом сложных процентов)?
- * Например, 100 рублей под 10% годовых превратятся в 133.1 рубля
- */
-fun accountInThreeYears(initial: Int, percent: Int): Double = TODO()
+    /**
+     * Простая
+     *
+     * Поезд вышел со станции отправления в h1 часов m1 минут (например в 9:25) и
+     * прибыл на станцию назначения в h2 часов m2 минут того же дня (например в 13:01).
+     * Определите время поезда в пути в минутах (в данном случае 216).
+     */
+    fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minutesArrive: Int): Int = TODO()
 
-/**
- * Простая
- *
- * Пользователь задает целое трехзначное число (например, 478).
- * Необходимо вывести число, полученное из заданного перестановкой цифр в обратном порядке (например, 874).
- */
-fun numberRevert(number: Int): Int = TODO()
+    /**
+     * Простая
+     *
+     * Человек положил в банк сумму в s рублей под p% годовых (проценты начисляются в конце года).
+     * Сколько денег будет на счету через 3 года (с учётом сложных процентов)?
+     * Например, 100 рублей под 10% годовых превратятся в 133.1 рубля
+     */
+    fun accountInThreeYears(initial: Int, percent: Int): Double = TODO()
+
+    /**
+     * Простая
+     *
+     * Пользователь задает целое трехзначное число (например, 478).
+     * Необходимо вывести число, полученное из заданного перестановкой цифр в обратном порядке (например, 874).
+     */
+    fun numberRevert(number: Int): Int = TODO()
+
