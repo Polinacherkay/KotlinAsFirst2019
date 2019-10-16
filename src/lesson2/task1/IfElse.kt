@@ -93,7 +93,7 @@ fun timeForHalfWay(
     val s2 = v2 * t2
     return when {
         s < s1 -> s / v1
-        s1 <= s -> ((s - s1) / v2) + t1
+        s < s1 + s2 -> ((s - s1) / v2) + t1
         else -> ((s - s1 - s2) / v3) + t1 + t2
     }
 }
