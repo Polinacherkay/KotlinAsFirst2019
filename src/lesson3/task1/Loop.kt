@@ -71,9 +71,9 @@ fun digitNumber(n: Int): Int {
     var s = n
     var count = 0
     if (s == 0) return 1
-    else while (s != 0) {
+    while (s != 0) {
         s /= 10
-        count ++
+        count++
 
     }
     return count
@@ -89,9 +89,8 @@ fun fib(n: Int): Int {
     var s = 3
     var two = 1
     var one = 1
-    var fib = 0
-    if (n == 1 || n == 2) fib = 1
-    else while (s <= n) {
+    var fib = 1
+    while (s <= n) {
         fib = one + two
         two = one
         one = fib
@@ -124,11 +123,11 @@ fun lcm(m: Int, n: Int): Int {
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-    var k: Int = 2
-    while (k <= n) {
-        if (n % k != 0) k ++ else return k
+    var k = 2
+    while (k <= n / 2) {
+        if (n % k != 0) k++ else return k
     }
-    return k
+    if (n % k != 0) return n else return k
 }
 
 /**
@@ -136,13 +135,8 @@ fun minDivisor(n: Int): Int {
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int {
-    var k = (n / 2)
-    while (k > 0) {
-        if (n % k != 0) k -- else return k
-    }
-  return k
-}
+fun maxDivisor(n: Int): Int = n / minDivisor(n)
+
 
 /**
  * Простая
@@ -166,14 +160,7 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  * то есть, существует ли такое целое k, что m <= k*k <= n.
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
-fun squareBetweenExists(m: Int, n: Int): Boolean {
-    var k = (sqrt(m.toDouble())).toInt() + 1
-    {
-    while (k < sqrt(n.toDouble()) || k * k in (m + 1)..(n - 1))
-        k++
-    }
-  return  k * k in (m + 1)..(n - 1)
-}
+fun squareBetweenExists(m: Int, n: Int): Boolean = TODO()
 
 /**
  * Средняя
@@ -191,7 +178,16 @@ fun squareBetweenExists(m: Int, n: Int): Boolean {
  * Написать функцию, которая находит, сколько шагов требуется для
  * этого для какого-либо начального X > 0.
  */
-fun collatzSteps(x: Int): Int = TODO()
+fun collatzSteps(x: Int): Int {
+    var n = 0
+    var y = x
+    while (y != 1) {
+        n ++
+        if (y % 2 == 0) y /= 2
+        else y = 3 * y + 1
+    }
+    return n
+}
 
 /**
  * Средняя
