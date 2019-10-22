@@ -127,7 +127,7 @@ fun minDivisor(n: Int): Int {
     while (k <= n / 2) {
         if (n % k != 0) k++ else return k
     }
-    if (n % k != 0) return n else return k
+    return if (n % k != 0) n else k
 }
 
 /**
@@ -162,6 +162,7 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  */
 fun squareBetweenExists(m: Int, n: Int): Boolean = TODO()
 
+
 /**
  * Средняя
  *
@@ -182,7 +183,7 @@ fun collatzSteps(x: Int): Int {
     var n = 0
     var y = x
     while (y != 1) {
-        n ++
+        n++
         if (y % 2 == 0) y /= 2
         else y = 3 * y + 1
     }
