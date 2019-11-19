@@ -251,7 +251,7 @@ fun convert(n: Int, base: Int): List<Int> {
     val res : MutableList<Int> = mutableListOf<Int>()
     var div = n
     if (n == 0) {
-        res[0] = 0
+        res.add(0,0)
         return res
     }
     while (div > 0) {
