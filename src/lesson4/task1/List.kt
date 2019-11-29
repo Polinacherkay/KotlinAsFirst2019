@@ -3,6 +3,7 @@
 package lesson4.task1
 
 import lesson1.task1.discriminant
+import java.lang.StringBuilder
 import kotlin.math.pow
 import kotlin.math.sqrt
 
@@ -169,6 +170,7 @@ fun times(a: List<Int>, b: List<Int>): Int {
     }
     return c
 }
+
 /**
  * Средняя
  *
@@ -186,6 +188,7 @@ fun polynom(p: List<Int>, x: Int): Int {
     }
     return s.toInt()
 }
+
 /**
  * Средняя
  *
@@ -197,16 +200,12 @@ fun polynom(p: List<Int>, x: Int): Int {
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
 fun accumulate(list: MutableList<Int>): MutableList<Int> {
-    if (list.isEmpty()) return list
-    else {
-        var sum = list[0]
-        for (i in 1 until list.size) {
+        var sum = 0
+        for (i in 0 until list.size) {
             val element = list[i]
             sum += element
             list[i] = sum
         }
-    }
-
     return list
 }
 
@@ -219,9 +218,8 @@ fun accumulate(list: MutableList<Int>): MutableList<Int> {
  */
 fun factorize(n: Int): List<Int> {
     var m = n
-    val m2 = n / 2
     val del = mutableListOf<Int>()
-    for (i in 2 .. m2) {
+    for (i in 2..sqrt(m.toDouble()).toInt() + 1) {
         while (m % i == 0) {
             del.add(i)
             m /= i
@@ -248,17 +246,14 @@ fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*
  * например: n = 100, base = 4 -> (1, 2, 1, 0) или n = 250, base = 14 -> (1, 3, 12)
  */
 fun convert(n: Int, base: Int): List<Int> {
-    val res : MutableList<Int> = mutableListOf<Int>()
+    val res: MutableList<Int> = mutableListOf<Int>()
     var div = n
-    if (n == 0) {
-        res.add(0,0)
-        return res
-    }
     while (div > 0) {
-        res.add (0 , div % base)
+        res.add(div % base)
         div /= base
     }
-    return res
+    if (res.isEmpty()) res.add(0)
+    return res.reversed()
 }
 
 /**
@@ -273,16 +268,17 @@ fun convert(n: Int, base: Int): List<Int> {
  * (например, n.toString(base) и подобные), запрещается.
  */
 fun convertToString(n: Int, base: Int): String {
-    var res = String()
+    val res = StringBuilder()
     val m = convert(n, base)
-    var s : Char
-    val list = listOf('0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f','g','h','i',
-        'j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z')
-    for (i in m) {
-        res += list[i]
+    for (i in 0 until m.size) {
+        when {
+        (m[i] % base in 10..37)  -> res.append((m[i] % base + 87).toChar())
+        (m[i] % base in 0..9) -> res.append((m[i] % base + 48).toChar())
+        }
     }
-    return res
+    return res.toString()
 }
+
 /**
  * Средняя
  *
@@ -293,10 +289,12 @@ fun convertToString(n: Int, base: Int): String {
 fun decimal(digits: List<Int>, base: Int): Int {
     var sum = 0
     var r = digits.size - 1
+    var deg = (base.toDouble().pow(r)).toInt()
     for (i in 0 until digits.size) {
         val element = digits[i]
-        sum += element * (base.toDouble().pow(r)).toInt()
+        sum += element * deg
         r--
+        deg /= base
     }
     return sum
 }
