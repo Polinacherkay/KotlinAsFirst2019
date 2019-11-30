@@ -2,6 +2,8 @@
 
 package lesson5.task1
 
+import lesson4.task1.mean
+
 /**
  * Пример
  *
@@ -93,7 +95,7 @@ fun buildWordSet(text: List<String>): MutableSet<String> {
  */
 fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
     val res = mutableMapOf<Int, MutableList<String>>()
-    for ((key,value) in grades) {
+    for ((key, value) in grades) {
         if (res[value] == null) res[value] = mutableListOf()
         res[value]!!.add(key)
     }
@@ -171,7 +173,19 @@ fun whoAreInBoth(a: List<String>, b: List<String>): List<String> {
  *     mapOf("Emergency" to "911", "Police" to "02")
  *   ) -> mapOf("Emergency" to "112, 911", "Police" to "02")
  */
-fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<String, String> = TODO()
+fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<String, String> {
+    val resultA = mutableMapOf<String, MutableList<String>>()
+    for ((key, value) in mapA) {
+        resultA[key] = mutableListOf(value)
+    }
+    for ((key, value) in mapB){
+        if (resultA[key] == null)  resultA[key] = mutableListOf(value)
+    }
+    for ((key, value) in mapB) {
+        if (resultA[key] != mutableListOf(value)) resultA[key]!!.add(value)
+    }
+    return resultA.mapValues { it.value.joinToString(", ") }
+}
 
 /**
  * Средняя

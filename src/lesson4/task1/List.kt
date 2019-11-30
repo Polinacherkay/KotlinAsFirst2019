@@ -200,12 +200,12 @@ fun polynom(p: List<Int>, x: Int): Int {
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
 fun accumulate(list: MutableList<Int>): MutableList<Int> {
-        var sum = 0
-        for (i in 0 until list.size) {
-            val element = list[i]
-            sum += element
-            list[i] = sum
-        }
+    var sum = 0
+    for (i in 0 until list.size) {
+        val element = list[i]
+        sum += element
+        list[i] = sum
+    }
     return list
 }
 
@@ -250,7 +250,7 @@ fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*
  * например: n = 100, base = 4 -> (1, 2, 1, 0) или n = 250, base = 14 -> (1, 3, 12)
  */
 fun convert(n: Int, base: Int): List<Int> {
-    val res: MutableList<Int> = mutableListOf<Int>()
+    val res: MutableList<Int> = mutableListOf()
     var div = n
     while (div > 0) {
         res.add(div % base)
@@ -276,7 +276,7 @@ fun convertToString(n: Int, base: Int): String {
     val m = convert(n, base)
     for (i in 0 until m.size) {
         when {
-        (m[i] % base in 10..37)  -> res.append((m[i] % base + 87).toChar())
+        (m[i] % base in 10..37) -> res.append((m[i] % base + 87).toChar())
         (m[i] % base in 0..9) -> res.append((m[i] % base + 48).toChar())
         }
     }
