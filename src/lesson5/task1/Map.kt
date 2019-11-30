@@ -178,8 +178,8 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
     for ((key, value) in mapA) {
         resultA[key] = mutableListOf(value)
     }
-    for ((key, value) in mapB){
-        if (resultA[key] == null)  resultA[key] = mutableListOf(value)
+    for ((key, value) in mapB) {
+        if (resultA[key] == null) resultA[key] = mutableListOf(value)
     }
     for ((key, value) in mapB) {
         if (resultA[key] != mutableListOf(value)) resultA[key]!!.add(value)
