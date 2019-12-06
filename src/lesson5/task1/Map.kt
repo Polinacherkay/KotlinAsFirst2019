@@ -97,7 +97,7 @@ fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
     val res = mutableMapOf<Int, MutableList<String>>()
     for ((key, value) in grades) {
         if (res[value] == null) res[value] = mutableListOf()
-        res[value]!!.add(key)
+        else res[value]!!.add(key)
     }
     return res
 }
@@ -134,8 +134,8 @@ fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean {
  *     -> a changes to mutableMapOf() aka becomes empty
  */
 fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>): MutableMap<String, String> {
-    for ((key) in b) {
-        if ((a.contains(key)) && (a[key] == b[key])) a.remove(key)
+    for ((key, value) in b) {
+        if (a[key] == b[key]) a.remove(key)
     }
     return a
 }
@@ -148,12 +148,10 @@ fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>): MutableMa
  * т. е. whoAreInBoth(listOf("Марат", "Семён, "Марат"), listOf("Марат", "Марат")) == listOf("Марат")
  */
 fun whoAreInBoth(a: List<String>, b: List<String>): List<String> {
-    val aSet = a.toSet()
-    val result = mutableListOf<String>()
-    for (element in aSet) {
-        if (b.contains(element)) result.add(element)
-    }
-    return result
+    val aSet = a.toMutableSet()
+    val bSet = b.toSet()
+    aSet.retainAll(bSet)
+    return aSet.toList()
 }
 
 /**
@@ -200,9 +198,9 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
 fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> {
     val intermediateRes = mutableMapOf<String, MutableList<Double>>()
     val result = mutableMapOf<String, Double>()
-    for (element in stockPrices) {
-        if (intermediateRes[element.first] == null) intermediateRes[element.first] = mutableListOf(element.second)
-        else intermediateRes[element.first]!!.add(element.second)
+    for ((first, second) in stockPrices) {
+        if (intermediateRes[first] == null) intermediateRes[first] = mutableListOf(second)
+        else intermediateRes[first]!!.add(second)
     }
     for ((key, value) in intermediateRes) {
         result[key] = mean(value)

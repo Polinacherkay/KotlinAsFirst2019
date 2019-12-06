@@ -133,6 +133,7 @@ fun abs(v: List<Double>): Double {
 fun mean(list: List<Double>): Double {
     var s = 0.0
     var count = 0
+    if (list.isEmpty()) return 0.0
     for (i in list) {
         count += 1
         s += i
@@ -218,19 +219,14 @@ fun accumulate(list: MutableList<Int>): MutableList<Int> {
  */
 fun factorize(n: Int): List<Int> {
     var m = n
-    val del = mutableListOf<Int>()
-    if (m in 0..9) {
-        del.add(m)
-        return del
-    }
+    val d = mutableListOf<Int>()
     for (i in 2..sqrt(m.toDouble()).toInt() + 1) {
         while (m % i == 0) {
-            del.add(i)
+            d.add(i)
             m /= i
         }
     }
-    if (m != 1) del.add(m)
-    return del.sorted()
+    return d
 }
 
 /**
@@ -252,11 +248,10 @@ fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*
 fun convert(n: Int, base: Int): List<Int> {
     val res: MutableList<Int> = mutableListOf()
     var div = n
-    while (div > 0) {
+    while (div != 0) {
         res.add(div % base)
         div /= base
     }
-    if (res.isEmpty()) res.add(0)
     return res.reversed()
 }
 
