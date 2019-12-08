@@ -226,6 +226,7 @@ fun factorize(n: Int): List<Int> {
             m /= i
         }
     }
+    if (m != 1) d.add(m)
     return d
 }
 
