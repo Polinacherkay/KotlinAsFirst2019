@@ -252,6 +252,7 @@ fun convert(n: Int, base: Int): List<Int> {
         res.add(div % base)
         div /= base
     }
+    if (res.isEmpty()) res.add(0)
     return res.reversed()
 }
 

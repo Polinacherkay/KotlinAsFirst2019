@@ -97,7 +97,7 @@ fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
     val res = mutableMapOf<Int, MutableList<String>>()
     for ((key, value) in grades) {
         if (res[value] == null) res[value] = mutableListOf()
-        else res[value]!!.add(key)
+        res[value]!!.add(key)
     }
     return res
 }
