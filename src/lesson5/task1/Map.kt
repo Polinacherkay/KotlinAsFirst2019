@@ -199,9 +199,9 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
 fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> {
     val intermediateRes = mutableMapOf<String, MutableList<Double>>()
     val result = mutableMapOf<String, Double>()
-    for ((first, second) in stockPrices) {
-        if (intermediateRes[first] == null) intermediateRes[first] = mutableListOf(second)
-        else intermediateRes[first]!!.add(second)
+    for ((key, value) in stockPrices) {
+        if (intermediateRes[key] == null) intermediateRes[key] = mutableListOf(value)
+        else intermediateRes[key]!!.add(value)
     }
     for ((key, value) in intermediateRes) {
         result[key] = mean(value)
@@ -225,7 +225,7 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  *   ) -> "Мария"
  */
 fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? {
-    var result: String = "hello"
+    var result:String = ""
     var price = Double.MAX_VALUE
     for ((key, value) in stuff) {
         if ((value.first == kind) && (value.second <= price)) {
@@ -233,7 +233,7 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
             result = key
         }
     }
-    return if (result == "hello") null
+    return if (result == "") null
     else result
 }
 
@@ -249,9 +249,7 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
 fun canBuildFrom(chars: List<Char>, word: String): Boolean {
     if (chars.isEmpty()) return false
     for (i in 0 until chars.size) chars[i].toLowerCase()
-    val letter = chars.toSet()
-    val w = word.toLowerCase().toSet()
-    if (letter.containsAll(w)) return true
+    if (chars.toSet().containsAll(word.toLowerCase().toSet())) return true
     return false
 }
 
@@ -270,7 +268,7 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean {
 fun extractRepeats(list: List<String>): Map<String, Int> {
     val result = mutableMapOf<String, MutableList<Int>>()
     val finalResult = mutableMapOf<String, Int>()
-    for (i in list.indices ) {
+    for (i in list.indices) {
         if (result[list[i]] == null) result[list[i]] = mutableListOf(1)
         else result[list[i]]!!.add(1)
     }
@@ -289,7 +287,7 @@ fun extractRepeats(list: List<String>): Map<String, Int> {
  * Например:
  *   hasAnagrams(listOf("тор", "свет", "рот")) -> true
  */
-fun hasAnagrams(words: List<String>): Boolean =TODO()
+fun hasAnagrams(words: List<String>): Boolean = TODO()
 
 /**
  * Сложная
