@@ -90,7 +90,7 @@ fun dateStrToDigit(str: String): String {
         if (parts.size != 3) return result
         val month = months.indexOf(parts[1]) + 1
         if ((daysInMonth(month, parts[2].toInt()) >= parts[0].toInt()) && (parts[1] in months)) {
-            result = String.format("%02d.%02d.%04d", parts[0].toInt(), month.toInt(), parts[2].toInt())
+            result = String.format("%02d.%02d.", parts[0].toInt(), month.toInt()) + parts[2].toInt()
         }
         return result
     }
