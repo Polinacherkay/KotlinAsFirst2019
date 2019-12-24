@@ -272,8 +272,8 @@ fun convertToString(n: Int, base: Int): String {
     val m = convert(n, base)
     for (i in 0 until m.size) {
         when {
-        (m[i] % base in 10..37) -> res.append('a' + (m[i] - 10) % base)
-        (m[i] % base in 0..9) -> res.append('0' + m[i] % base)
+            (m[i] % base in 10..37) -> res.append('a' + (m[i] - 10) % base)
+            (m[i] % base in 0..9) -> res.append('0' + m[i] % base)
         }
     }
     return res.toString()

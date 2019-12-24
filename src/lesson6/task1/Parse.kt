@@ -2,7 +2,9 @@
 
 package lesson6.task1
 
+import kotlinx.html.attributes.stringSetDecode
 import lesson2.task2.daysInMonth
+import java.lang.NumberFormatException
 
 /**
  * Пример
@@ -71,30 +73,30 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
+val m = mapOf<String, Int>("января" to 1,
+    "февраля" to 2,
+    "марта" to 3,
+    "апреля" to 4,
+    "мая" to 5,
+    "июня" to 6,
+    "июля" to 7,
+    "августа" to 8,
+    "сентября" to 9,
+    "октября" to 10,
+    "ноября" to 11,
+    "декабря" to 12)
 fun dateStrToDigit(str: String): String {
-    val months = listOf<String> ("января",
-        "февраля",
-        "марта",
-        "апреля",
-        "мая",
-        "июня",
-        "июля",
-        "августа",
-        "сентября",
-        "октября",
-        "ноября",
-        "декабря")
     try {
         var result = ""
         val parts = str.split(" ")
         if (parts.size != 3) return result
-        val month = months.indexOf(parts[1]) + 1
-        if ((daysInMonth(month, parts[2].toInt()) >= parts[0].toInt()) && (parts[1] in months)) {
-            result = String.format("%02d.%02d.", parts[0].toInt(), month.toInt()) + parts[2].toInt()
+        val month: Int = m[parts[1]] ?: error("")
+        if ((daysInMonth(month, parts[2].toInt()) >= parts[0].toInt())) {
+            result = String.format("%02d.%02d.%s", parts[0].toInt(), month, parts[2].toInt())
         }
         return result
     }
-    catch (e: IllegalArgumentException) {
+    catch (e: IllegalStateException) {
         return ""
     }
 }
@@ -109,8 +111,33 @@ fun dateStrToDigit(str: String): String {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30 февраля 2009) считается неверными
  * входными данными.
  */
-fun dateDigitToStr(digital: String): String = TODO()
-
+val months: Map<Int, String> = mapOf<Int, String>(1 to "января",
+    2 to "февраля",
+    3 to "марта",
+    4 to "апреля",
+    5 to "мая",
+    6 to "июня",
+    7 to "июля",
+    8 to "августа",
+    9 to "сентября",
+    10 to "октября",
+    11 to "ноября",
+    12 to "декабря")
+fun dateDigitToStr(digital: String): String {
+    try {
+        var result = ""
+        val parts = digital.split(".")
+        if (parts.size != 3) return result
+        val month = months[parts[1].toInt()]
+        if ((daysInMonth(parts[1].toInt(), parts[2].toInt()) >= parts[0].toInt()) && (parts[1].toInt() - 1 in 1..12)) {
+            result = String.format("%d %s %d", parts[0].toInt(), month, parts[2].toInt())
+        } else result = ""
+        return result
+    }
+    catch (e: NumberFormatException) {
+        return ""
+    }
+}
 
 
 /**
