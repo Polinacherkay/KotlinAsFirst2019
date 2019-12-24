@@ -129,8 +129,8 @@ fun dateDigitToStr(digital: String): String {
         val parts = digital.split(".")
         if (parts.size != 3) return result
         val month = months[parts[1].toInt()]
-        if ((daysInMonth(parts[1].toInt(), parts[2].toInt()) >= parts[0].toInt()) && (parts[1].toInt() - 1 in 1..12)) {
-            result = String.format("%d %s %d", parts[0].toInt(), month, parts[2].toInt())
+        if ((daysInMonth(parts[1].toInt(), parts[2].toInt()) >= parts[0].toInt()) && (parts[1].toInt() in 1..12)) {
+            result = String.format("%d %s %d", parts[0].toInt(), month.toString(), parts[2].toInt())
         } else result = ""
         return result
     }
