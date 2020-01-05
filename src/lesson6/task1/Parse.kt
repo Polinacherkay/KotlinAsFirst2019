@@ -178,9 +178,9 @@ fun bestLongJump(jumps: String): Int {
     var max = -1
     val check = Regex("""[^0-9%\s\-]""")
     if (check.containsMatchIn(jumps)) return -1
-    val s = jumps.split(' ')
-    for (i in s.indices) {
-        if (s[i].toIntOrNull() != null && s[i].toInt() > max) max = s[i].toInt()
+    val p = jumps.split(' ')
+    for (i in p.indices) {
+        if (p[i].toIntOrNull() != null && p[i].toInt() > max) max = p[i].toInt()
     }
     return max
 }
