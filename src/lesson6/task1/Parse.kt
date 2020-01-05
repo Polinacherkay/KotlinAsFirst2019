@@ -154,7 +154,15 @@ fun dateDigitToStr(digital: String): String {
  *
  * PS: Дополнительные примеры работы функции можно посмотреть в соответствующих тестах.
  */
-fun flattenPhoneNumber(phone: String): String = TODO()
+fun flattenPhoneNumber(phone: String): String {
+    val c = """\((\D+)\)""".toRegex()
+    if (phone.contains("()") || (c.containsMatchIn(phone))) return ""
+    if (c.matches(phone) && (phone.contains("("))) return ""
+    val res = phone.filter { (it != ' ') && (it != '-') && (it != ')') && (it != '(')}
+    val regex = """(\+\d*|\d*)""".toRegex()
+    val result = regex.matchEntire(res)
+    return if ((result == null)) "" else res
+}
 
 /**
  * Средняя
@@ -166,7 +174,16 @@ fun flattenPhoneNumber(phone: String): String = TODO()
  * Прочитать строку и вернуть максимальное присутствующее в ней число (717 в примере).
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
-fun bestLongJump(jumps: String): Int = TODO()
+fun bestLongJump(jumps: String): Int {
+    var max = -1
+    val check = Regex("""[^0-9%\s\-]""")
+    if (check.containsMatchIn(jumps)) return -1
+    val s = jumps.split(' ')
+    for (i in s.indices) {
+        if (s[i].toIntOrNull() != null && s[i].toInt() > max) max = s[i].toInt()
+    }
+    return max
+}
 
 /**
  * Сложная
