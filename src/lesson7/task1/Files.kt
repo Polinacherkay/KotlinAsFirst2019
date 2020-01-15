@@ -2,6 +2,7 @@
 
 package lesson7.task1
 
+import ru.spbstu.ktuples.zip
 import java.io.File
 
 /**
@@ -86,7 +87,32 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
  *
  */
 fun sibilants(inputName: String, outputName: String) {
-    TODO()
+    val file = File(inputName).readLines()
+    val result = File(outputName).bufferedWriter()
+    val letters = setOf<String>("ж", "ч", "ш", "щ")
+    val mistakes = setOf("ы", "я", "ю")
+    if (file.isNotEmpty()) {
+        for (line in file) {
+            if (line.isNotEmpty()) {
+                result.write(line[0].toString())
+                for (i in 1 until  line.length) {
+                    if (letters.contains(line[i - 1].toLowerCase().toString())
+                        && (mistakes.contains(line[i].toLowerCase().toString()))) {
+                        when (line[i]) {
+                            'ы' -> result.write("и")
+                            'Ы' -> result.write("И")
+                            'я' -> result.write("а")
+                            'Я' -> result.write("А")
+                            'ю' -> result.write("у")
+                            'Ю' -> result.write("У")
+                        }
+                    } else result.write(line[i].toString())
+                }
+            } else result.write(line.toString())
+            result.newLine()
+        }
+    }
+result.close()
 }
 
 /**
@@ -445,4 +471,3 @@ fun printMultiplicationProcess(lhv: Int, rhv: Int, outputName: String) {
 fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     TODO()
 }
-

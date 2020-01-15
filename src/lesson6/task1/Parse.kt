@@ -4,6 +4,7 @@ package lesson6.task1
 
 import kotlinx.html.attributes.stringSetDecode
 import lesson2.task2.daysInMonth
+import java.lang.IllegalArgumentException
 import java.lang.NumberFormatException
 
 /**
@@ -196,7 +197,18 @@ fun bestLongJump(jumps: String): Int {
  * При нарушении формата входной строки, а также в случае отсутствия удачных попыток,
  * вернуть -1.
  */
-fun bestHighJump(jumps: String): Int = TODO()
+fun bestHighJump(jumps: String): Int {
+    var max = -1
+    val check = Regex("""[^0-9%\s\-+]""")
+    if (check.containsMatchIn(jumps)) return -1
+    val p = jumps.split(' ')
+    val check1 = Regex("""[^%\-]""")
+    for (i in p.indices step 2) {
+       if (check1.containsMatchIn(p[i + 1]) && (p[i].toIntOrNull() != null) && (p[i].toInt() > max))
+           max = p[i].toInt()
+    }
+    return max
+}
 
 /**
  * Сложная
@@ -207,7 +219,31 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()
+fun plusMinus(expression: String): Int {
+    var result = 0
+    val check = Regex("""[^0-9\s\-+]""")
+    if (check.containsMatchIn(expression)) throw IllegalArgumentException()
+    val term = expression.split(' ')
+    val check1 = Regex("""[^0-9]""")
+    val check2 = Regex("""[^+\-]""")
+    if ((term.size == 1) && (check1.containsMatchIn(term[0]))) throw IllegalArgumentException()
+    if (term.size == 1) return term[0].toInt()
+    for (i in 0..term.size - 1 step 2) {
+        if (check1.containsMatchIn(term[i])) throw IllegalArgumentException()
+    }
+    for (i in 1..term.size - 1 step 2) {
+        if (check2.containsMatchIn(term[i])) throw IllegalArgumentException()
+    }
+    for (i in 0..term.size - 1 step 2) {
+        if (term[i].toIntOrNull() == null) throw IllegalArgumentException()
+    }
+    result = term[0].toInt()
+    for (i in 1..term.size - 1 step 2) {
+        if (term[i] == "-") result -= term[i + 1].toInt()
+        else result += term[i + 1].toInt()
+    }
+    return result
+}
 
 /**
  * Сложная
