@@ -16,6 +16,7 @@ package lesson12.task1
  * В конструктор передаётся название станции отправления для данного расписания.
  */
 class TrainTimeTable(val baseStationName: String) {
+    val trains = mutableListOf<Train>()
     /**
      * Добавить новый поезд.
      *
@@ -26,7 +27,13 @@ class TrainTimeTable(val baseStationName: String) {
      * @param destination конечная станция
      * @return true, если поезд успешно добавлен, false, если такой поезд уже есть
      */
-    fun addTrain(train: String, depart: Time, destination: Stop): Boolean = TODO()
+    fun addTrain(train: String, depart: Time, destination: Stop): Boolean {
+        for (tt in trains) {
+            if (tt.name == train) return false
+        }
+        trains.add(Train(train, Stop(baseStationName, depart), destination))
+        return true
+    }
 
     /**
      * Удалить существующий поезд.
@@ -36,7 +43,15 @@ class TrainTimeTable(val baseStationName: String) {
      * @param train название поезда
      * @return true, если поезд успешно удалён, false, если такой поезд не существует
      */
-    fun removeTrain(train: String): Boolean = TODO()
+    fun removeTrain(train: String): Boolean {
+        for (tt in trains) {
+            if (tt.name == train) {
+                trains.remove(tt)
+                return true
+            }
+        }
+        return false
+    }
 
     /**
      * Добавить/изменить начальную, промежуточную или конечную остановку поезду.
@@ -73,7 +88,9 @@ class TrainTimeTable(val baseStationName: String) {
     /**
      * Вернуть список всех поездов, упорядоченный по времени отправления с baseStationName
      */
-    fun trains(): List<Train> = TODO()
+    fun trains(): List<Train> {
+      return trains.sortedBy { it.stops.first().time.hour * 60 + it.stops.first().time.minute }
+    }
 
     /**
      * Вернуть список всех поездов, отправляющихся не ранее currentTime

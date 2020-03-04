@@ -2,6 +2,8 @@
 
 package lesson12.task1
 
+import kotlinx.html.P
+
 /**
  * Класс "Телефонная книга".
  *
@@ -17,8 +19,8 @@ package lesson12.task1
  *
  * Класс должен иметь конструктор по умолчанию (без параметров).
  */
-class PhoneBook() {
-    val book = mutableListOf<Pair<String, MutableList<String>>>()
+class PhoneBook {
+    val book1 = mutableMapOf<String, MutableSet<String>>()
     /**
      * Добавить человека.
      * Возвращает true, если человек был успешно добавлен,
@@ -26,11 +28,11 @@ class PhoneBook() {
      * (во втором случае телефонная книга не должна меняться).
      */
     fun addHuman(name: String): Boolean {
-            for (pair in book) {
-                if (pair.first == name) return false
-            }
-            book.add(name to mutableListOf())
-            return true
+        for ((key) in book1) {
+            if (key == name) return false
+        }
+        book1[name] = mutableSetOf()
+        return true
     }
 
     /**
@@ -40,9 +42,9 @@ class PhoneBook() {
      * (во втором случае телефонная книга не должна меняться).
      */
     fun removeHuman(name: String): Boolean {
-            for (i in book.indices) {
-                if (book[i].first == name) {
-                    book.removeAt(i)
+            for ((key) in book1) {
+                if (key == name) {
+                    book1.remove(name)
                     return true
                 }
             }
@@ -57,10 +59,10 @@ class PhoneBook() {
      * либо такой номер телефона зарегистрирован за другим человеком.
      */
     fun addPhone(name: String, phone: String): Boolean {
-        for (pair in book) {
-            if (pair.second.contains(phone)) return false
-            if (pair.first == name) {
-                pair.second.add(phone)
+        for ((key, value) in book1) {
+            if (value.contains(phone)) return false
+            if (key == name) {
+                value.add(phone)
                 return true
             }
         }
@@ -74,9 +76,9 @@ class PhoneBook() {
      * либо у него не было такого номера телефона.
      */
     fun removePhone(name: String, phone: String): Boolean {
-        for (pair in book) {
-            if (pair.first == name && pair.second.contains(phone)) {
-                pair.second.remove(phone)
+        for ((key, value) in book1) {
+            if (key == name && value.contains(phone)) {
+                value.remove(phone)
                 return true
             }
         }
@@ -88,8 +90,8 @@ class PhoneBook() {
      * Если этого человека нет в книге, вернуть пустой список
      */
     fun phones(name: String): Set<String> {
-        for (pair in book) {
-            if (pair.first == name) return pair.second.toSet()
+        for ((key, value) in book1) {
+            if (key == name) return value
         }
         val n = setOf<String>()
         return n
@@ -100,8 +102,8 @@ class PhoneBook() {
      * Если такого номера нет в книге, вернуть null.
      */
     fun humanByPhone(phone: String): String? {
-        for (pair in book) {
-            if (pair.second.contains(phone)) return pair.first
+        for ((key, value) in book1) {
+            if (value.contains(phone)) return key
         }
         return null
     }
@@ -111,24 +113,18 @@ class PhoneBook() {
      * и каждому человеку соответствует одинаковый набор телефонов.
      * Порядок людей / порядок телефонов в книге не должен иметь значения.
      */
-    val book2 = mutableListOf<Pair<String, MutableList<String>>>()
     override fun equals(other: Any?): Boolean {
-            for (pair in book) {
-                for (i in book2.indices) {
-                    if ((pair.first != book2[i].first && !pair.second.containsAll(book[i].second)) || other !is PhoneBook) return false
-                }
+        if (other is PhoneBook) {
+            for ((key, value) in book1) {
+                if ((other.book1[key] ?: return false) != value) return false
+                return true
             }
-        return true
+        }
+        return false
     }
 
     override fun hashCode(): Int {
-        var result = 5
-        if(book == book2) {
-            result = book.hashCode()
-            result = 31 * result + book2.hashCode()
-            return result
-        }
-        return result
+        return book1.hashCode()
     }
 
 }
