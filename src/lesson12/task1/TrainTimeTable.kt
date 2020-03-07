@@ -73,7 +73,7 @@ class TrainTimeTable(val baseStationName: String) {
      * @param stop начальная, промежуточная или конечная станция
      * @return true, если поезду была добавлена новая остановка, false, если было изменено время остановки на старой
      */
-    fun addStop(train: String, stop: Stop): Boolean  {
+    fun addStop(train: String, stop: Stop): Boolean {
         for ((j, tt) in trains.withIndex()) {
             if (tt.name == train) {
                 val stops = tt.stops
@@ -129,9 +129,8 @@ class TrainTimeTable(val baseStationName: String) {
     /**
      * Вернуть список всех поездов, упорядоченный по времени отправления с baseStationName
      */
-    fun trains(): List<Train> {
-      return trains.sortedBy { it.stops.first().time.hour * 60 + it.stops.first().time.minute }
-    }
+    fun trains(): List<Train> = trains.sortedBy { it.stops.first().time.hour * 60 + it.stops.first().time.minute }
+
 
     /**
      * Вернуть список всех поездов, отправляющихся не ранее currentTime
@@ -155,7 +154,7 @@ class TrainTimeTable(val baseStationName: String) {
         while (size != finalList.size) {
             var minimalTime = 721
             var index = 0
-            for ((i,tt) in list.withIndex()) {
+            for ((i, tt) in list.withIndex()) {
                 for (st in tt.stops) {
                     if (st.name == destinationName && (st.time.hour * 60 + st.time.minute) < minimalTime) {
                         minimalTime = st.time.hour * 60 + st.time.minute
@@ -183,6 +182,10 @@ class TrainTimeTable(val baseStationName: String) {
             if (set1 == set2) return true
         }
         return false
+    }
+
+    override fun hashCode(): Int {
+        return trains.hashCode()
     }
 }
 
