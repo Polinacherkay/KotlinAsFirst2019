@@ -2,7 +2,6 @@
 
 package lesson12.task1
 
-import kotlinx.html.P
 
 /**
  * Класс "Телефонная книга".
@@ -42,13 +41,13 @@ class PhoneBook {
      * (во втором случае телефонная книга не должна меняться).
      */
     fun removeHuman(name: String): Boolean {
-            for ((key) in book1) {
-                if (key == name) {
-                    book1.remove(name)
-                    return true
-                }
+        for ((key) in book1) {
+            if (key == name) {
+                book1.remove(name)
+                return true
             }
-            return false
+        }
+        return false
     }
 
     /**
@@ -93,8 +92,7 @@ class PhoneBook {
         for ((key, value) in book1) {
             if (key == name) return value
         }
-        val n = setOf<String>()
-        return n
+        return setOf()
     }
 
     /**
@@ -123,8 +121,6 @@ class PhoneBook {
         return false
     }
 
-    override fun hashCode(): Int {
-        return book1.hashCode()
-    }
+    override fun hashCode(): Int = book1.hashCode()
 
 }
