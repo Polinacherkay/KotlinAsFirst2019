@@ -19,7 +19,7 @@ package lesson12.task1
  * Класс должен иметь конструктор по умолчанию (без параметров).
  */
 class PhoneBook {
-    val book1 = mutableMapOf<String, MutableSet<String>>()
+    private val book = mutableMapOf<String, MutableSet<String>>()
     /**
      * Добавить человека.
      * Возвращает true, если человек был успешно добавлен,
@@ -27,10 +27,8 @@ class PhoneBook {
      * (во втором случае телефонная книга не должна меняться).
      */
     fun addHuman(name: String): Boolean {
-        for ((key) in book1) {
-            if (key == name) return false
-        }
-        book1[name] = mutableSetOf()
+        if (book.containsKey(name)) return false
+        book[name] = mutableSetOf()
         return true
     }
 
@@ -41,13 +39,9 @@ class PhoneBook {
      * (во втором случае телефонная книга не должна меняться).
      */
     fun removeHuman(name: String): Boolean {
-        for ((key) in book1) {
-            if (key == name) {
-                book1.remove(name)
-                return true
-            }
-        }
-        return false
+        if (!book.contains(name)) return false
+        book.remove(name)
+        return true
     }
 
     /**
@@ -58,7 +52,7 @@ class PhoneBook {
      * либо такой номер телефона зарегистрирован за другим человеком.
      */
     fun addPhone(name: String, phone: String): Boolean {
-        for ((key, value) in book1) {
+        for ((key, value) in book) {
             if (value.contains(phone)) return false
             if (key == name) {
                 value.add(phone)
@@ -75,13 +69,9 @@ class PhoneBook {
      * либо у него не было такого номера телефона.
      */
     fun removePhone(name: String, phone: String): Boolean {
-        for ((key, value) in book1) {
-            if (key == name && value.contains(phone)) {
-                value.remove(phone)
-                return true
-            }
-        }
-        return false
+        if (!book.contains(name) || !book[name]!!.contains(phone)) return false
+        book[name]!!.remove(phone)
+        return true
     }
 
     /**
@@ -89,10 +79,8 @@ class PhoneBook {
      * Если этого человека нет в книге, вернуть пустой список
      */
     fun phones(name: String): Set<String> {
-        for ((key, value) in book1) {
-            if (key == name) return value
-        }
-        return setOf()
+        if (!book.contains(name)) return setOf()
+        return book[name]!!
     }
 
     /**
@@ -100,7 +88,7 @@ class PhoneBook {
      * Если такого номера нет в книге, вернуть null.
      */
     fun humanByPhone(phone: String): String? {
-        for ((key, value) in book1) {
+        for ((key, value) in book) {
             if (value.contains(phone)) return key
         }
         return null
@@ -112,15 +100,10 @@ class PhoneBook {
      * Порядок людей / порядок телефонов в книге не должен иметь значения.
      */
     override fun equals(other: Any?): Boolean {
-        if (other is PhoneBook) {
-            for ((key, value) in book1) {
-                if ((other.book1[key] ?: return false) != value) return false
-                return true
-            }
-        }
+        if (other is PhoneBook && book == other.book) return true
         return false
     }
 
-    override fun hashCode(): Int = book1.hashCode()
+    override fun hashCode(): Int = book.hashCode()
 
 }

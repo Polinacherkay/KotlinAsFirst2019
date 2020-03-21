@@ -129,7 +129,7 @@ class TrainTimeTable(val baseStationName: String) {
     /**
      * Вернуть список всех поездов, упорядоченный по времени отправления с baseStationName
      */
-    fun trains(): List<Train> = trains.sortedBy { it.stops.first().time.hour * 60 + it.stops.first().time.minute }
+    fun trains(): List<Train> = trains.sortedBy { it.stops.first().time.time }
 
 
     /**
@@ -156,8 +156,8 @@ class TrainTimeTable(val baseStationName: String) {
             var index = 0
             for ((i, tt) in list.withIndex()) {
                 for (st in tt.stops) {
-                    if (st.name == destinationName && (st.time.hour * 60 + st.time.minute) < minimalTime) {
-                        minimalTime = st.time.hour * 60 + st.time.minute
+                    if (st.name == destinationName && (st.time.time) < minimalTime) {
+                        minimalTime = st.time.time
                         index = i
                     }
                 }
@@ -193,6 +193,7 @@ class TrainTimeTable(val baseStationName: String) {
  * Время (часы, минуты)
  */
 data class Time(val hour: Int, val minute: Int) : Comparable<Time> {
+    val time = hour * 60 + minute
     /**
      * Сравнение времён на больше/меньше (согласно контракту compareTo)
      */
